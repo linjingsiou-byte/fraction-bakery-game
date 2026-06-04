@@ -575,6 +575,13 @@ const Game1Manager = {
   // 動態生成 8 種幾何等分與非等分圖形
   shapeTemplates: [
     {
+      id: 'circle_eq_2',
+      shape: 'circle',
+      title: '圓形平分2份',
+      isEqual: true,
+      draw() { return SVGRenderer.drawCircleFraction(2, null); }
+    },
+    {
       id: 'circle_eq_3',
       shape: 'circle',
       title: '圓形平分3份',
@@ -582,12 +589,110 @@ const Game1Manager = {
       draw() { return SVGRenderer.drawCircleFraction(3, null); }
     },
     {
+      id: 'circle_eq_4',
+      shape: 'circle',
+      title: '圓形平分4份',
+      isEqual: true,
+      draw() { return SVGRenderer.drawCircleFraction(4, null); }
+    },
+    {
+      id: 'rect_eq_2',
+      shape: 'rect',
+      title: '長方形平分2份',
+      isEqual: true,
+      draw() { return SVGRenderer.drawRectFraction(2, null); }
+    },
+    {
+      id: 'rect_eq_3',
+      shape: 'rect',
+      title: '長方形平分3份',
+      isEqual: true,
+      draw() { return SVGRenderer.drawRectFraction(3, null); }
+    },
+    {
+      id: 'rect_eq_4',
+      shape: 'rect',
+      title: '長方形平分4份',
+      isEqual: true,
+      draw() { return SVGRenderer.drawRectFraction(4, null); }
+    },
+    {
+      id: 'square_eq_2_vert',
+      shape: 'square',
+      title: '正方形平分2份',
+      isEqual: true,
+      draw() {
+        return `
+          <svg viewBox="0 0 240 240">
+            <rect x="20" y="20" width="200" height="200" fill="#FFF8E1" stroke="#FFE082" stroke-width="2" rx="4"/>
+            <line x1="120" y1="20" x2="120" y2="220" stroke="#FFE082" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    },
+    {
+      id: 'square_eq_2_diag',
+      shape: 'square',
+      title: '正方形平分2份',
+      isEqual: true,
+      draw() {
+        return `
+          <svg viewBox="0 0 240 240">
+            <rect x="20" y="20" width="200" height="200" fill="#FFF8E1" stroke="#FFE082" stroke-width="2" rx="4"/>
+            <line x1="20" y1="20" x2="220" y2="220" stroke="#FFE082" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    },
+    {
+      id: 'square_eq_4',
+      shape: 'square',
+      title: '正方形平分4份',
+      isEqual: true,
+      draw() {
+        return `
+          <svg viewBox="0 0 240 240">
+            <rect x="20" y="20" width="200" height="200" fill="#FFF8E1" stroke="#FFE082" stroke-width="2" rx="4"/>
+            <line x1="20" y1="20" x2="220" y2="220" stroke="#FFE082" stroke-width="2"/>
+            <line x1="220" y1="20" x2="20" y2="220" stroke="#FFE082" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    },
+    {
+      id: 'triangle_eq_2',
+      shape: 'triangle',
+      title: '三角形平分2份',
+      isEqual: true,
+      draw() {
+        return `
+          <svg viewBox="0 0 240 240">
+            <polygon points="120,20 20,210 220,210" fill="#E8F5E9" stroke="#81C784" stroke-width="2"/>
+            <line x1="120" y1="20" x2="120" y2="210" stroke="#81C784" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    },
+    {
+      id: 'circle_neq_2',
+      shape: 'circle',
+      title: '圓形不平分2份',
+      isEqual: false,
+      draw() {
+        return `
+          <svg viewBox="0 0 240 240">
+            <circle cx="120" cy="120" r="100" fill="#FFF3E0" stroke="#D7CCC8" stroke-width="2"/>
+            <line x1="70" y1="22" x2="70" y2="218" stroke="#D7CCC8" stroke-width="2" stroke-dasharray="4"/>
+          </svg>
+        `;
+      }
+    },
+    {
       id: 'circle_neq_3',
       shape: 'circle',
       title: '圓形不平分3份',
       isEqual: false,
       draw() {
-        // 使用水平平行線切割圓形 (面積不等分)
         return `
           <svg viewBox="0 0 240 240">
             <circle cx="120" cy="120" r="100" fill="#FFF3E0" stroke="#D7CCC8" stroke-width="2"/>
@@ -598,11 +703,33 @@ const Game1Manager = {
       }
     },
     {
-      id: 'rect_eq_4',
+      id: 'rect_neq_2',
       shape: 'rect',
-      title: '長方形平分4份',
-      isEqual: true,
-      draw() { return SVGRenderer.drawRectFraction(4, null); }
+      title: '長方形不平分2份',
+      isEqual: false,
+      draw() {
+        return `
+          <svg viewBox="0 0 250 110">
+            <rect x="5" y="10" width="240" height="90" fill="#E0D4C5" stroke="#B0BEC5" stroke-width="2" rx="6"/>
+            <line x1="70" y1="10" x2="70" y2="100" stroke="#B0BEC5" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    },
+    {
+      id: 'rect_neq_3',
+      shape: 'rect',
+      title: '長方形不平分3份',
+      isEqual: false,
+      draw() {
+        return `
+          <svg viewBox="0 0 250 110">
+            <rect x="5" y="10" width="240" height="90" fill="#E0D4C5" stroke="#B0BEC5" stroke-width="2" rx="6"/>
+            <line x1="55" y1="10" x2="55" y2="100" stroke="#B0BEC5" stroke-width="2"/>
+            <line x1="175" y1="10" x2="175" y2="100" stroke="#B0BEC5" stroke-width="2"/>
+          </svg>
+        `;
+      }
     },
     {
       id: 'rect_neq_4',
@@ -610,7 +737,6 @@ const Game1Manager = {
       title: '長方形不平分4份',
       isEqual: false,
       draw() {
-        // 隨機寬度的長方形巧克力
         return `
           <svg viewBox="0 0 250 110">
             <rect x="5" y="10" width="240" height="90" fill="#E0D4C5" stroke="#B0BEC5" stroke-width="2" rx="6"/>
@@ -622,28 +748,11 @@ const Game1Manager = {
       }
     },
     {
-      id: 'square_eq_4',
-      shape: 'square',
-      title: '正方形平分4份',
-      isEqual: true,
-      draw() {
-        // 對角線切割正方形
-        return `
-          <svg viewBox="0 0 240 240">
-            <rect x="20" y="20" width="200" height="200" fill="#FFF8E1" stroke="#FFE082" stroke-width="2" rx="4"/>
-            <line x1="20" y1="20" x2="220" y2="220" stroke="#FFE082" stroke-width="2"/>
-            <line x1="220" y1="20" x2="20" y2="220" stroke="#FFE082" stroke-width="2"/>
-          </svg>
-        `;
-      }
-    },
-    {
       id: 'square_neq_2',
       shape: 'square',
       title: '正方形不平分2份',
       isEqual: false,
       draw() {
-        // 歪斜斜線切割
         return `
           <svg viewBox="0 0 240 240">
             <rect x="20" y="20" width="200" height="200" fill="#FFF8E1" stroke="#FFE082" stroke-width="2" rx="4"/>
@@ -653,16 +762,16 @@ const Game1Manager = {
       }
     },
     {
-      id: 'triangle_eq_2',
-      shape: 'triangle',
-      title: '三角形平分2份',
-      isEqual: true,
+      id: 'square_neq_4_unequal',
+      shape: 'square',
+      title: '正方形不平分4份',
+      isEqual: false,
       draw() {
-        // 等腰三角形中線切割
         return `
           <svg viewBox="0 0 240 240">
-            <polygon points="120,20 20,210 220,210" fill="#E8F5E9" stroke="#81C784" stroke-width="2"/>
-            <line x1="120" y1="20" x2="120" y2="210" stroke="#81C784" stroke-width="2"/>
+            <rect x="20" y="20" width="200" height="200" fill="#FFF8E1" stroke="#FFE082" stroke-width="2" rx="4"/>
+            <line x1="70" y1="20" x2="70" y2="220" stroke="#FFE082" stroke-width="2"/>
+            <line x1="20" y1="150" x2="220" y2="150" stroke="#FFE082" stroke-width="2"/>
           </svg>
         `;
       }
@@ -673,11 +782,25 @@ const Game1Manager = {
       title: '三角形不平分2份',
       isEqual: false,
       draw() {
-        // 橫切三角形 (頂部小三角與底端梯形，面積相差極大)
         return `
           <svg viewBox="0 0 240 240">
             <polygon points="120,20 20,210 220,210" fill="#E8F5E9" stroke="#81C784" stroke-width="2"/>
             <line x1="70" y1="115" x2="170" y2="115" stroke="#81C784" stroke-width="2"/>
+          </svg>
+        `;
+      }
+    },
+    {
+      id: 'triangle_neq_3',
+      shape: 'triangle',
+      title: '三角形不平分3份',
+      isEqual: false,
+      draw() {
+        return `
+          <svg viewBox="0 0 240 240">
+            <polygon points="120,20 20,210 220,210" fill="#E8F5E9" stroke="#81C784" stroke-width="2"/>
+            <line x1="70" y1="115" x2="170" y2="115" stroke="#81C784" stroke-width="2"/>
+            <line x1="95" y1="70" x2="145" y2="70" stroke="#81C784" stroke-width="2"/>
           </svg>
         `;
       }
@@ -720,16 +843,20 @@ const Game1Manager = {
   renderSingleQuestion() {
     const container = document.getElementById('game-1-container');
     
-    // 隨機洗牌題目範本並抽取 4 個 (確保至少有 1-2 個是平分)
-    const shuffled = shuffleArray(this.shapeTemplates);
-    let options = shuffled.slice(0, 4);
+    // 分開平分與不平分的選項
+    const equalShapes = this.shapeTemplates.filter(opt => opt.isEqual);
+    const unequalShapes = this.shapeTemplates.filter(opt => !opt.isEqual);
     
-    // 確保候選清單中「一定有平分」圖形，避免無解
-    if (!options.some(opt => opt.isEqual)) {
-      const equalOpt = this.shapeTemplates.find(opt => opt.isEqual);
-      options[0] = equalOpt;
-    }
-    // 重新打亂選項順序
+    // 隨機選出 1 個平分的圖形
+    const shuffledEqual = shuffleArray(equalShapes);
+    const correctOpt = shuffledEqual[0];
+    
+    // 隨機選出 3 個不平分的圖形
+    const shuffledUnequal = shuffleArray(unequalShapes);
+    const wrongOpts = shuffledUnequal.slice(0, 3);
+    
+    // 合併並打亂順序，確保只有「剛好一個」正確答案
+    let options = [correctOpt, ...wrongOpts];
     options = shuffleArray(options);
     
     const questionText = "找一找，哪一個圖形有平分？";
@@ -832,12 +959,20 @@ const Game1Manager = {
   renderPvpQuestion() {
     const container = document.getElementById('game-1-container');
     
-    const shuffled = shuffleArray(this.shapeTemplates);
-    let options = shuffled.slice(0, 4);
-    if (!options.some(opt => opt.isEqual)) {
-      const equalOpt = this.shapeTemplates.find(opt => opt.isEqual);
-      options[0] = equalOpt;
-    }
+    // 分開平分與不平分的選項
+    const equalShapes = this.shapeTemplates.filter(opt => opt.isEqual);
+    const unequalShapes = this.shapeTemplates.filter(opt => !opt.isEqual);
+    
+    // 隨機選出 1 個平分的圖形
+    const shuffledEqual = shuffleArray(equalShapes);
+    const correctOpt = shuffledEqual[0];
+    
+    // 隨機選出 3 個不平分的圖形
+    const shuffledUnequal = shuffleArray(unequalShapes);
+    const wrongOpts = shuffledUnequal.slice(0, 3);
+    
+    // 合併並打亂順序，確保只有「剛好一個」正確答案
+    let options = [correctOpt, ...wrongOpts];
     options = shuffleArray(options);
     
     // 快照當前題目資料
