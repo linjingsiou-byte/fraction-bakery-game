@@ -833,6 +833,9 @@ const Game1Manager = {
         this.showFinalScore();
         return;
       }
+      // 重設搶答狀態，避免下一題無法搶答
+      GameState.pvpLocked = false;
+      GameState.pvpTurn = null;
       this.renderPvpQuestion();
     }
   },
@@ -1745,6 +1748,9 @@ const Game3Manager = {
         this.showFinalScore();
         return;
       }
+      // 重設搶答狀態，避免下一題無法搶答
+      GameState.pvpLocked = false;
+      GameState.pvpTurn = null;
       this.renderPvpQuestion();
     }
   },
