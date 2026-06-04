@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分數魔法烘焙屋 - 國小二年級單位分數互動教材</title>
+  <!-- Google Fonts for playful typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Dynamic background sparkles -->
+  <div class="bg-sparkles"></div>
+
+  <!-- Global Control Header -->
+  <header class="global-header">
+    <div class="header-logo" id="btn-home-logo">
+      <span class="emoji-logo">🧁</span>
+      <h1 class="title-text">分數魔法烘焙屋</h1>
+    </div>
+    <div class="header-controls">
+      <button id="btn-toggle-autoread" class="control-btn active" title="開啟或關閉自動語音報讀題目">
+        <span class="btn-icon">🗣️</span>
+        <span class="btn-text">自動報讀: 開</span>
+      </button>
+      <button id="btn-toggle-audio" class="control-btn active" title="切換音效">
+        <span class="btn-icon">🎵</span>
+        <span class="btn-text">音效</span>
+      </button>
+      <button id="btn-nav-home" class="control-btn hide" title="回到首頁">
+        <span class="btn-icon">🏠</span>
+        <span class="btn-text">首頁</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Screen 1: Welcome Screen -->
+    <section id="screen-welcome" class="game-screen active">
+      <div class="welcome-content">
+        <div class="hero-character-container">
+          <div class="floating-character cat">🐱</div>
+          <div class="floating-character rabbit">🐰</div>
+        </div>
+        <h2 class="welcome-title">歡迎光臨！分數魔法烘焙屋</h2>
+        <p class="welcome-subtitle">在這裡，我們要用「平分」做出香噴噴的點心喔！</p>
+
+        <div class="mode-selection">
+          <!-- Single Player Card -->
+          <div class="mode-card" id="card-mode-single">
+            <div class="mode-card-icon bg-pink">🍳</div>
+            <h3>單人自主學習</h3>
+            <p>跟著小動物一起認識單位分數，收集點心星星！</p>
+            <button class="play-btn pink-btn">開始探索</button>
+          </div>
+
+          <!-- Two Player Card -->
+          <div class="mode-card" id="card-mode-pvp">
+            <div class="mode-card-icon bg-blue">⚔️</div>
+            <h3>雙人烘焙對決</h3>
+            <p>雙人同屏搶答，看誰是最厲害的烘焙小廚神！</p>
+            <button class="play-btn blue-btn">雙人對戰</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 2: Game Selection Menu -->
+    <section id="screen-menu" class="game-screen">
+      <div class="menu-header">
+        <h2 id="menu-title-text">遊戲選單</h2>
+        <span class="badge" id="player-mode-badge">單人模式</span>
+      </div>
+      
+      <div class="menu-grid">
+        <!-- Explorer Button -->
+        <div class="menu-item" id="menu-btn-explorer">
+          <div class="menu-item-icon">🔮</div>
+          <div class="menu-item-info">
+            <h4>魔法分數儀 (學習探索區)</h4>
+            <p>動手切切看，感受平分與單位分數！</p>
+          </div>
+        </div>
+
+        <!-- Level 1 Button -->
+        <div class="menu-item" id="menu-btn-game1">
+          <div class="menu-item-icon">🔍</div>
+          <div class="menu-item-info">
+            <h4>關卡一：平分小偵探</h4>
+            <p>找出有「平分」的點心，這才是分數的魔法喔！</p>
+          </div>
+        </div>
+
+        <!-- Level 2 Button -->
+        <div class="menu-item" id="menu-btn-game2">
+          <div class="menu-item-icon">🧑‍🍳</div>
+          <div class="menu-item-info">
+            <h4>關卡二：點心魔法師</h4>
+            <p>配合顧客要求，動手切割並做出指定的單位分數！</p>
+          </div>
+        </div>
+
+        <!-- Level 3 Button -->
+        <div class="menu-item" id="menu-btn-game3">
+          <div class="menu-item-icon">🐻</div>
+          <div class="menu-item-info">
+            <h4>關卡三：貪吃熊比大小</h4>
+            <p>比一比哪一個單位分數比較大！</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="menu-footer">
+        <button id="btn-back-to-welcome" class="standard-btn secondary-btn">🔙 返回模式選擇</button>
+      </div>
+    </section>
+
+    <!-- Screen 3: Concept Explorer -->
+    <section id="screen-explorer" class="game-screen">
+      <div class="screen-header">
+        <h3>🔮 魔法分數儀</h3>
+        <button id="btn-explorer-speak" class="speak-btn">🔊 朗讀</button>
+      </div>
+
+      <div class="explorer-layout">
+        <!-- Left Side: Interactive controls -->
+        <div class="control-panel panel-card">
+          <div class="selector-group">
+            <span class="label-title">1. 選擇點心形狀：</span>
+            <div class="shape-buttons">
+              <button id="btn-shape-circle" class="shape-btn active">
+                <span class="shape-icon">🎂</span>
+                <span>圓形蛋糕</span>
+              </button>
+              <button id="btn-shape-rect" class="shape-btn">
+                <span class="shape-icon">🍫</span>
+                <span>長條巧克力</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <span class="label-title">2. 要平分成幾份呢？</span>
+            <div class="slider-wrapper">
+              <input type="range" id="explorer-divider-range" min="2" max="12" value="4" step="1">
+              <div class="range-value-bubble" id="range-value-num">4 份</div>
+            </div>
+          </div>
+
+          <div class="explanation-box" id="explorer-explanation">
+            <!-- Dynamic text will go here -->
+          </div>
+        </div>
+
+        <!-- Right Side: SVG Visualization -->
+        <div class="visual-panel panel-card">
+          <div class="svg-container" id="explorer-svg-container">
+            <!-- Interactive SVG drawn dynamically -->
+          </div>
+          <div class="fraction-display-card">
+            <div class="fraction-formula">
+              <div class="numerator" id="exp-numerator">1</div>
+              <div class="fraction-bar"></div>
+              <div class="denominator" id="exp-denominator">4</div>
+            </div>
+            <div class="fraction-name" id="exp-fraction-name">
+              四分之一
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-footer">
+        <button class="standard-btn menu-back-btn">🔙 返回選單</button>
+      </div>
+    </section>
+
+    <!-- Screen 4: Game 1 - Equal Division Detective -->
+    <section id="screen-game-1" class="game-screen">
+      <!-- Will support Single and PvP templates inside JS -->
+      <div id="game-1-container" class="game-container-wrapper">
+        <!-- Rendered dynamically via JS based on mode (Single/PvP) -->
+      </div>
+    </section>
+
+    <!-- Screen 5: Game 2 - Fraction Maker -->
+    <section id="screen-game-2" class="game-screen">
+      <div id="game-2-container" class="game-container-wrapper">
+        <!-- Rendered dynamically via JS based on mode -->
+      </div>
+    </section>
+
+    <!-- Screen 6: Game 3 - Fraction Comparison -->
+    <section id="screen-game-3" class="game-screen">
+      <div id="game-3-container" class="game-container-wrapper">
+        <!-- Rendered dynamically via JS based on mode -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="global-footer">
+    <div class="footer-slogan">🧁 快樂烘焙，快樂學分數！</div>
+    <div class="footer-info">
+      <span>本網站內容係參考康軒版國小二年級數學「分數」單元。</span>
+      <span class="footer-separator">|</span>
+      <span>設計者：國立屏科實驗高級中等學校(國小部) 林敬修老師</span>
+    </div>
+  </footer>
+
+  <!-- Particles container for celebration -->
+  <div id="celebration-confetti-container" class="confetti-container"></div>
+
+  <!-- Include Javascript logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
