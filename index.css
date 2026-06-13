@@ -1,0 +1,1230 @@
+/* ==================== DESIGN SYSTEM & VARIABLES ==================== */
+:root {
+  --bg-dark-1: hsl(230, 45%, 11%);
+  --bg-dark-2: hsl(275, 45%, 15%);
+  --magic-gold: hsl(45, 100%, 60%);
+  --magic-gold-light: hsl(45, 100%, 75%);
+  --magic-gold-glow: hsla(45, 100%, 60%, 0.4);
+  
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  --p1-red: hsl(355, 80%, 65%);
+  --p1-red-glow: hsla(355, 80%, 65%, 0.3);
+  --p2-blue: hsl(205, 85%, 60%);
+  --p2-blue-glow: hsla(205, 85%, 60%, 0.3);
+  
+  --text-main: hsl(0, 0%, 96%);
+  --text-muted: hsl(230, 15%, 75%);
+  --success-green: hsl(145, 75%, 45%);
+  --error-red: hsl(355, 75%, 55%);
+}
+
+/* ==================== GLOBAL STYLES ==================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+  background: linear-gradient(135deg, var(--bg-dark-1) 0%, var(--bg-dark-2) 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Background Stars */
+.stars-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  opacity: 0.25;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 90vh;
+  padding: 24px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Glassmorphism Panel Base */
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ==================== BUTTONS & INTERACTIVE ELEMENTS ==================== */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--magic-gold) 0%, hsl(35, 100%, 50%) 100%);
+  color: hsl(230, 45%, 10%);
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px var(--magic-gold-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--magic-gold-glow);
+  filter: brightness(1.1);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success-green) 0%, hsl(145, 80%, 35%) 100%);
+  color: white;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
+}
+
+.btn-back {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+}
+.btn-back:hover {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+.btn-sound {
+  background: hsla(205, 85%, 60%, 0.15);
+  color: hsl(205, 85%, 75%);
+  border: 1px solid hsla(205, 85%, 60%, 0.3);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-sound:hover {
+  background: hsla(205, 85%, 60%, 0.3);
+  color: white;
+}
+
+/* ==================== SCREENS ==================== */
+.screen {
+  display: none;
+  animation: fadeIn 0.4s ease-out;
+}
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== HOME SCREEN ==================== */
+#home-screen {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.logo-container {
+  margin-bottom: 48px;
+}
+.logo-emoji {
+  font-size: 4.5rem;
+  display: block;
+  margin-bottom: 12px;
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+  100% { transform: translateY(0); }
+}
+
+.logo-container h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background: linear-gradient(to right, #ffffff, var(--magic-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.version-tag {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--p1-red) 0%, var(--magic-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  vertical-align: super;
+}
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.mode-select-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.mode-card {
+  text-align: center;
+  padding: 40px 24px;
+  cursor: pointer;
+  color: inherit;
+  border-width: 2px;
+}
+.mode-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--magic-gold-light);
+  box-shadow: 0 12px 35px var(--magic-gold-glow);
+}
+.card-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+.mode-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: var(--magic-gold-light);
+}
+.mode-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.home-footer {
+  margin-top: 20px;
+}
+
+/* ==================== LEVEL SELECT SCREEN ==================== */
+.screen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 16px;
+}
+.screen-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+.star-counter {
+  background: rgba(255,255,255,0.1);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--magic-gold);
+}
+
+.level-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.level-node {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-left: 6px solid var(--magic-gold);
+}
+.level-node:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+}
+.level-node.locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-left-color: rgba(255,255,255,0.2);
+}
+.level-node.locked:hover {
+  transform: none;
+  box-shadow: var(--glass-shadow);
+}
+.level-badge {
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 30px;
+  width: fit-content;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+.level-node h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: var(--magic-gold-light);
+}
+.level-node .desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+.level-stars {
+  font-size: 1.2rem;
+}
+
+/* ==================== SINGLE GAME SCREEN ==================== */
+.round-progress {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+.game-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.workspace-panel {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.question-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,255,255,0.04);
+  padding: 16px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.question-text {
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.visual-area {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 350px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  border: 1px dashed rgba(255,255,255,0.1);
+  padding: 16px;
+  overflow: auto;
+}
+
+/* Control Panel */
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.panel-header {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--magic-gold);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 12px;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 150px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+.action-buttons button {
+  flex-grow: 1;
+}
+
+.feedback-msg {
+  padding: 16px;
+  border-radius: 16px;
+  animation: slideIn 0.3s ease;
+}
+.feedback-msg.correct {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+.feedback-msg.correct .feedback-status {
+  color: var(--success-green);
+}
+.feedback-msg.incorrect {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+.feedback-msg.incorrect .feedback-status {
+  color: var(--error-red);
+}
+
+.feedback-status {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.feedback-explanation {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ==================== MATH FRACTION RENDERER ==================== */
+/* Core OMML structured representation */
+.math-mixed {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--magic-gold-light);
+  line-height: 1;
+  vertical-align: middle;
+}
+.math-int {
+  font-size: 2.5rem;
+  margin-right: 6px;
+  color: var(--text-main);
+}
+.math-frac {
+  display: inline-table;
+  vertical-align: middle;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.9em;
+}
+.row-num {
+  display: table-row;
+}
+.row-den {
+  display: table-row;
+}
+.cell-num {
+  display: table-cell;
+  text-align: center;
+  border-bottom: 3.5px solid currentColor;
+  padding-bottom: 2px;
+  min-width: 25px;
+}
+.cell-den {
+  display: table-cell;
+  text-align: center;
+  padding-top: 2px;
+  min-width: 25px;
+}
+
+/* ==================== INTERACTIVE GRAPHICS ==================== */
+
+/* Level 1: Bakery visual cakes (Pizza slices / rectangular parts) */
+.cake-visualization-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.baking-plate {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.plate-base {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 4px dashed rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+.plate-cake-svg {
+  width: 110px;
+  height: 110px;
+  z-index: 2;
+  transform: rotate(-90deg); /* Start slicing from top center */
+}
+.cake-slice {
+  stroke: var(--bg-dark-1);
+  stroke-width: 2px;
+  transition: fill 0.3s ease, opacity 0.3s ease;
+}
+.cake-slice.empty {
+  fill: rgba(255, 255, 255, 0.05);
+}
+.cake-slice.filled {
+  fill: var(--magic-gold);
+  filter: drop-shadow(0 0 4px var(--magic-gold-glow));
+}
+.cake-slice.clickable {
+  cursor: pointer;
+}
+.cake-slice.clickable:hover {
+  filter: brightness(1.2);
+}
+.plate-label {
+  position: absolute;
+  bottom: -22px;
+  background: rgba(0,0,0,0.4);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Level 2: Comparison Double plates & Overlap visualization */
+.comparison-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+.comparison-plates {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+}
+.comp-plate-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.comparison-slot {
+  width: 70px;
+  height: 70px;
+  border: 3px dashed var(--magic-gold);
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--magic-gold);
+  background: rgba(255, 255, 255, 0.02);
+}
+.comparison-buttons {
+  display: flex;
+  gap: 12px;
+}
+.btn-comparison-sign {
+  width: 55px;
+  height: 55px;
+  font-size: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-main);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+}
+.btn-comparison-sign:hover {
+  background: var(--magic-gold);
+  color: var(--bg-dark-1);
+}
+.btn-comparison-sign.selected {
+  background: var(--magic-gold);
+  color: var(--bg-dark-1);
+  box-shadow: 0 0 15px var(--magic-gold-glow);
+}
+
+/* Semi-transparent overlap layout */
+.overlap-simulation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  animation: fadeIn 0.3s ease;
+  padding: 16px;
+  text-align: center;
+}
+.overlap-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 16px 0;
+}
+.overlap-cake-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.overlap-slice-a {
+  fill: hsla(205, 90%, 55%, 0.6); /* Blue semi-transparent */
+  stroke: hsl(205, 90%, 55%);
+  stroke-width: 2.5px;
+}
+.overlap-slice-b {
+  fill: hsla(15, 90%, 60%, 0.6); /* Orange semi-transparent */
+  stroke: hsl(15, 90%, 60%);
+  stroke-width: 2.5px;
+}
+.overlap-explanation-text {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+.overlap-close-btn {
+  margin-top: 12px;
+}
+
+/* Level 3: Dynamic Balance Scale */
+.balance-scale-svg {
+  width: 100%;
+  max-width: 420px;
+  height: 240px;
+}
+.scale-part {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: 210px 100px; /* Beam pivot point */
+}
+.scale-beam {
+  stroke: #c0c0c0;
+  stroke-width: 8px;
+  stroke-linecap: round;
+}
+.scale-pivot {
+  fill: var(--magic-gold);
+}
+.left-pan-group, .right-pan-group {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.scale-plate-line {
+  stroke: rgba(255,255,255,0.4);
+  stroke-width: 2.5px;
+}
+.scale-plate-tray {
+  fill: var(--glass-bg);
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 3px;
+}
+/* Keyframe for scale shaking */
+@keyframes scale-shake {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-5deg); }
+  40% { transform: rotate(4deg); }
+  60% { transform: rotate(-3deg); }
+  80% { transform: rotate(2deg); }
+  100% { transform: rotate(0deg); }
+}
+.shake-scale {
+  animation: scale-shake 0.8s ease-in-out;
+}
+
+/* Level 3 Fraction input boxes */
+.fraction-input-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 2rem;
+}
+.int-input-box {
+  width: 65px;
+  height: 75px;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-main);
+  outline: none;
+}
+.int-input-box:focus {
+  border-color: var(--magic-gold);
+  box-shadow: 0 0 10px var(--magic-gold-glow);
+}
+.frac-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.frac-input-box {
+  width: 55px;
+  height: 45px;
+  font-size: 1.5rem;
+  text-align: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-main);
+  outline: none;
+}
+.frac-input-divider {
+  width: 55px;
+  height: 3px;
+  background: var(--text-main);
+}
+.frac-input-box:focus {
+  border-color: var(--magic-gold);
+}
+
+/* Level 4: Baker plates for multiples */
+.multiples-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px;
+}
+.multiple-baking-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.integer-multiplication-symbol {
+  font-size: 3rem;
+  color: var(--magic-gold);
+  margin: 0 12px;
+  font-weight: 800;
+}
+.integer-factor-display {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+/* Level 4 Choice select list */
+.choices-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+}
+.btn-choice {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+.btn-choice:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+}
+.btn-choice.selected {
+  background: rgba(241, 196, 15, 0.2);
+  border-color: var(--magic-gold);
+  box-shadow: 0 0 12px var(--magic-gold-glow);
+}
+.btn-choice.correct {
+  background: rgba(46, 204, 113, 0.3) !important;
+  border-color: var(--success-green) !important;
+}
+.btn-choice.incorrect {
+  background: rgba(231, 76, 60, 0.3) !important;
+  border-color: var(--error-red) !important;
+}
+
+/* ==================== DUEL SETUP SCREEN ==================== */
+.setup-container {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.setup-container h3 {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+.duel-level-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.duel-level-btn {
+  padding: 20px 14px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-main);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  font-size: 1.1rem;
+}
+.duel-level-btn span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.duel-level-btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+.duel-level-btn.active {
+  background: rgba(45, 85, 255, 0.15);
+  border-color: var(--p2-blue);
+  box-shadow: 0 0 15px var(--p2-blue-glow);
+}
+.setup-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.glass-select {
+  background: var(--bg-dark-1);
+  color: var(--text-main);
+  border: 1px solid var(--glass-border);
+  padding: 10px 16px;
+  border-radius: 12px;
+  outline: none;
+  font-family: inherit;
+  font-size: 1rem;
+}
+.start-duel-btn {
+  width: 100%;
+}
+
+/* ==================== DUEL GAME SCREEN ==================== */
+#duel-screen {
+  animation: fadeIn 0.4s ease-out;
+}
+.duel-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 12px;
+}
+.btn-back-small {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-muted);
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+.btn-back-small:hover {
+  background: var(--error-red);
+  color: white;
+}
+.duel-title-center {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--magic-gold-light);
+}
+.duel-limit-info {
+  background: rgba(255,255,255,0.06);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.duel-workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.player-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  border-width: 2px;
+}
+.player1-theme {
+  border-color: var(--p1-red-glow);
+  background: linear-gradient(180deg, rgba(231, 76, 60, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+.player2-theme {
+  border-color: var(--p2-blue-glow);
+  background: linear-gradient(180deg, rgba(52, 152, 219, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.player-avatar {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.player-score-container {
+  font-size: 1rem;
+}
+.player-divider {
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+}
+.player-gameplay {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.duel-question-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+  border-radius: 12px;
+}
+.btn-sound-small {
+  background: rgba(255,255,255,0.08);
+  color: var(--text-main);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 6px;
+}
+.duel-q-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.duel-visual-area {
+  flex-grow: 1;
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border: 1px dashed rgba(255,255,255,0.05);
+  padding: 12px;
+}
+
+.duel-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+.small-inputs {
+  min-height: 100px;
+}
+.btn-primary-small {
+  background: linear-gradient(135deg, var(--magic-gold) 0%, hsl(35, 100%, 50%) 100%);
+  color: hsl(230, 45%, 10%);
+  padding: 10px 20px;
+  font-size: 1rem;
+  width: 100%;
+}
+.btn-primary-small:hover {
+  filter: brightness(1.1);
+}
+
+.duel-feedback {
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+.duel-feedback.correct {
+  background: rgba(46, 204, 113, 0.2);
+  color: var(--success-green);
+}
+.duel-feedback.incorrect {
+  background: rgba(231, 76, 60, 0.2);
+  color: var(--error-red);
+}
+
+/* ==================== MODALS ==================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-content h2 {
+  font-size: 1.6rem;
+  color: var(--magic-gold);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal-body {
+  color: var(--text-main);
+  line-height: 1.7;
+}
+.modal-body h3 {
+  margin: 16px 0 8px 0;
+  color: var(--magic-gold-light);
+}
+.modal-body ul {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+.modal-body li {
+  margin-bottom: 10px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+/* Winner Card Special */
+.winner-card {
+  text-align: center;
+  animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.winner-trophy {
+  font-size: 5rem;
+  animation: bounce 1s infinite alternate;
+}
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-15px); }
+}
+
+/* ==================== DEVELOPER PLAYTEST PANEL ==================== */
+.dev-panel {
+  position: fixed;
+  bottom: 0;
+  right: 20px;
+  width: 480px;
+  max-height: 450px;
+  background: rgba(15, 18, 30, 0.95);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+  font-family: Consolas, Monaco, monospace;
+}
+.dev-panel.closed {
+  transform: translateY(calc(100% - 40px));
+}
+
+.dev-header {
+  height: 40px;
+  background: rgba(255,255,255,0.06);
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: var(--magic-gold-light);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.dev-header:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.dev-body {
+  flex-grow: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  height: calc(100% - 40px);
+}
+
+.dev-controls {
+  display: flex;
+  gap: 8px;
+}
+.btn-dev-action {
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-main);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-dev-action:hover {
+  background: var(--magic-gold);
+  color: var(--bg-dark-1);
+}
+.btn-dev-stop {
+  background: var(--error-red);
+  color: white;
+}
+.btn-dev-stop:hover {
+  background: hsl(0, 80%, 45%);
+  color: white;
+}
+
+.test-status-bar {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 4px;
+}
+.pass-count {
+  color: var(--success-green);
+  font-weight: bold;
+}
+.fail-count {
+  color: var(--error-red);
+  font-weight: bold;
+}
+
+.test-logs-container {
+  flex-grow: 1;
+  background: rgba(0,0,0,0.5);
+  border-radius: 8px;
+  padding: 8px;
+  overflow-y: auto;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.log-line {
+  word-break: break-all;
+}
+.log-line.info {
+  color: var(--text-muted);
+}
+.log-line.success {
+  color: var(--success-green);
+}
+.log-line.error {
+  color: var(--error-red);
+  font-weight: bold;
+}
+.log-line.warning {
+  color: var(--magic-gold);
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 900px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+  .duel-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+  .player-panel {
+    min-height: 480px;
+  }
+  .mode-select-grid {
+    grid-template-columns: 1fr;
+  }
+}

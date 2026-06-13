@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分數魔法烘焙屋 4.0 - 互動教學網站</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="index.css?v=4.0.1">
+</head>
+<body>
+  <!-- Background magic stars decoration -->
+  <div class="stars-bg"></div>
+  
+  <div class="app-container">
+    
+    <!-- ==================== HOME SCREEN ==================== -->
+    <section id="home-screen" class="screen active">
+      <div class="logo-container">
+        <span class="logo-emoji">🧙‍♂️🍰</span>
+        <h1>分數魔法烘焙屋 <span class="version-tag">4.0</span></h1>
+        <p class="subtitle">四年級上學期．分數魔法之旅</p>
+        <div class="header-credits" style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; font-weight: 500;">
+          <p>🧁 快樂烘焙，分數真簡單！</p>
+          <p>本網站內容係參考康軒版國小四年級數學「分數」單元。</p>
+          <p style="margin: 4px 0; opacity: 0.4;">|</p>
+          <p>設計者：國立屏科實驗高級中等學校(國小部) 林敬修老師 與 Antigravity 共同創作</p>
+        </div>
+      </div>
+      
+      <div class="mode-select-grid">
+        <button id="btn-single-mode" class="mode-card glass-panel" onclick="gameEngine.switchScreen('level-select')">
+          <div class="card-icon">🍞</div>
+          <h2>單人自學模式</h2>
+          <p>獨自探索四大魔法關卡，收集烘焙之星，破解分數迷思！</p>
+        </button>
+        
+        <button id="btn-duel-mode" class="mode-card glass-panel" onclick="gameEngine.switchScreen('duel-setup')">
+          <div class="card-icon">⚔️</div>
+          <h2>雙人對決模式</h2>
+          <p>同屏雙人烘焙競速！看誰算得快、烤得準，搶先成為特級廚師！</p>
+        </button>
+      </div>
+      
+      <div class="home-footer">
+        <button class="btn-secondary" onclick="gameEngine.toggleInstructionModal(true)">📖 魔法烘焙秘笈</button>
+      </div>
+    </section>
+
+    <!-- ==================== LEVEL SELECT SCREEN ==================== -->
+    <section id="level-select-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" onclick="gameEngine.switchScreen('home')">⬅ 回首頁</button>
+        <h2>選擇魔法烘焙關卡</h2>
+        <div class="star-counter">🌟 Total: <span id="total-stars">0</span></div>
+      </div>
+      
+      <div class="level-map">
+        <!-- Level 1 -->
+        <div class="level-node glass-panel" id="node-level-1" onclick="gameEngine.startSingleLevel(1)">
+          <div class="level-badge">關卡 1</div>
+          <h3>認識與互換魔法屋</h3>
+          <p class="desc">分辨真、假、帶分數，完成魔法材料包轉換！</p>
+          <div class="level-stars">⭐⭐⭐</div>
+        </div>
+        
+        <!-- Level 2 -->
+        <div class="level-node glass-panel" id="node-level-2" onclick="gameEngine.startSingleLevel(2)">
+          <div class="level-badge">關卡 2</div>
+          <h3>分數比大小天平</h3>
+          <p class="desc">破解整數與分母偏誤，在天平上比對麵包大小！</p>
+          <div class="level-stars">⭐⭐⭐</div>
+        </div>
+        
+        <!-- Level 3 -->
+        <div class="level-node glass-panel" id="node-level-3" onclick="gameEngine.startSingleLevel(3)">
+          <div class="level-badge">關卡 3</div>
+          <h3>同分母加減魔法秤</h3>
+          <p class="desc">進位與借位退法，調配完美的分數烘焙配方！</p>
+          <div class="level-stars">⭐⭐⭐</div>
+        </div>
+        
+        <!-- Level 4 -->
+        <div class="level-node glass-panel" id="node-level-4" onclick="gameEngine.startSingleLevel(4)">
+          <div class="level-badge">關卡 4</div>
+          <h3>倍數烤箱魔法陣</h3>
+          <p class="desc">將多盤甜點倒在一起！熟練分數乘以整數的魔法！</p>
+          <div class="level-stars">⭐⭐⭐</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SINGLE GAME SCREEN ==================== -->
+    <section id="single-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" onclick="gameEngine.switchScreen('level-select')">⬅ 回關卡地圖</button>
+        <h2 id="single-level-title">關卡載入中...</h2>
+        <div class="round-progress">題目：<span id="curr-q-idx">1</span> / <span id="total-q-idx">5</span></div>
+      </div>
+      
+      <div class="game-layout">
+        <!-- Left: Question & Interactive Workspace -->
+        <div class="workspace-panel glass-panel">
+          <div class="question-container">
+            <div class="tts-controls" style="display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; align-items: flex-start;">
+              <button id="btn-tts" class="btn-sound" title="播放語音">🔊 讀題</button>
+              <label class="tts-toggle-label" style="display: flex; align-items: center; gap: 4px; font-size: 0.8rem; cursor: pointer; color: var(--text-muted);">
+                <input type="checkbox" id="tts-auto-toggle" checked style="cursor: pointer; accent-color: var(--magic-gold);">
+                <span>自動讀題</span>
+              </label>
+            </div>
+            <div id="question-text" class="question-text">題目文字載入中...</div>
+          </div>
+          
+          <!-- Visual feedback & interaction area -->
+          <div id="visual-interaction-area" class="visual-area">
+            <!-- Rendered dynamically by RenderEngine -->
+          </div>
+        </div>
+        
+        <!-- Right: Input & Answer Submission -->
+        <div class="control-panel glass-panel">
+          <div class="panel-header">🧪 魔法調配區</div>
+          
+          <!-- Dynamic Answer input generated by level -->
+          <div id="answer-inputs-container" class="inputs-container">
+            <!-- Injected by Level managers -->
+          </div>
+          
+          <div class="action-buttons">
+            <button id="btn-submit-answer" class="btn-primary" onclick="gameEngine.submitAnswer()">提交魔法配方</button>
+            <button id="btn-next-question" class="btn-success hidden" onclick="gameEngine.nextQuestion()">下一題 ➔</button>
+          </div>
+          
+          <div id="answer-feedback" class="feedback-msg hidden">
+            <div class="feedback-status">答對了！🎉</div>
+            <div class="feedback-explanation">解釋文字載入中...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DUEL SETUP SCREEN ==================== -->
+    <section id="duel-setup-screen" class="screen">
+      <div class="screen-header">
+        <button class="btn-back" onclick="gameEngine.switchScreen('home')">⬅ 回首頁</button>
+        <h2>雙人烘焙對決設定</h2>
+      </div>
+      
+      <div class="setup-container glass-panel">
+        <h3>選擇對決的主題關卡</h3>
+        <div class="duel-level-grid">
+          <button class="duel-level-btn active" onclick="duelEngine.selectLevel(1)">
+            <span>關卡 1</span> 認識與互換
+          </button>
+          <button class="duel-level-btn" onclick="duelEngine.selectLevel(2)">
+            <span>關卡 2</span> 分數比大小
+          </button>
+          <button class="duel-level-btn" onclick="duelEngine.selectLevel(3)">
+            <span>關卡 3</span> 同分母加減
+          </button>
+          <button class="duel-level-btn" onclick="duelEngine.selectLevel(4)">
+            <span>關卡 4</span> 分數整數倍
+          </button>
+        </div>
+        
+        <div class="setup-row">
+          <label for="duel-win-limit">獲勝所需烘焙糕點數：</label>
+          <select id="duel-win-limit" class="glass-select">
+            <option value="5" selected>5 個 (快速對決)</option>
+            <option value="10">10 個 (標準賽制)</option>
+            <option value="15">15 個 (大廚挑戰)</option>
+          </select>
+        </div>
+        
+        <button class="btn-primary start-duel-btn" onclick="duelEngine.startDuel()">開始對決！⚔️</button>
+      </div>
+    </section>
+
+    <!-- ==================== DUEL GAME SCREEN ==================== -->
+    <section id="duel-screen" class="screen">
+      <div class="duel-top-bar">
+        <button class="btn-back-small" onclick="gameEngine.switchScreen('home')">放棄對決</button>
+        <div class="duel-title-center">🍰 雙人烘焙競速賽 🍰</div>
+        <div class="duel-limit-info">目標：烘焙出 <span id="duel-target-score">5</span> 個甜點</div>
+      </div>
+      
+      <div class="duel-workspace-grid">
+        <!-- Player 1 (Left / Red) -->
+        <div id="player1-panel" class="player-panel glass-panel player1-theme">
+          <div class="player-header">
+            <span class="player-avatar">👨‍🍳 紅方烘焙師</span>
+            <div class="player-score-container">
+              已烘焙：<span id="p1-score-stars"></span> (<span id="p1-score-num">0</span>)
+            </div>
+          </div>
+          <hr class="player-divider">
+          <div class="player-gameplay">
+            <div class="duel-question-box">
+              <button class="btn-sound-small" onclick="duelEngine.speakPlayerQuestion(1)">🔊 讀題</button>
+              <div id="p1-question-text" class="duel-q-text">載入中...</div>
+            </div>
+            
+            <div id="p1-visual-area" class="duel-visual-area"></div>
+            
+            <div class="duel-input-area">
+              <div id="p1-inputs" class="inputs-container small-inputs"></div>
+              <button id="p1-submit-btn" class="btn-primary-small" onclick="duelEngine.submitPlayerAnswer(1)">提交配方</button>
+            </div>
+            
+            <div id="p1-feedback" class="duel-feedback hidden"></div>
+          </div>
+        </div>
+        
+        <!-- Player 2 (Right / Blue) -->
+        <div id="player2-panel" class="player-panel glass-panel player2-theme">
+          <div class="player-header">
+            <span class="player-avatar">👩‍🍳 藍方烘焙師</span>
+            <div class="player-score-container">
+              已烘焙：<span id="p2-score-stars"></span> (<span id="p2-score-num">0</span>)
+            </div>
+          </div>
+          <hr class="player-divider">
+          <div class="player-gameplay">
+            <div class="duel-question-box">
+              <button class="btn-sound-small" onclick="duelEngine.speakPlayerQuestion(2)">🔊 讀題</button>
+              <div id="p2-question-text" class="duel-q-text">載入中...</div>
+            </div>
+            
+            <div id="p2-visual-area" class="duel-visual-area"></div>
+            
+            <div class="duel-input-area">
+              <div id="p2-inputs" class="inputs-container small-inputs"></div>
+              <button id="p2-submit-btn" class="btn-primary-small" onclick="duelEngine.submitPlayerAnswer(2)">提交配方</button>
+            </div>
+            
+            <div id="p2-feedback" class="duel-feedback hidden"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div> <!-- /app-container -->
+
+  <!-- ==================== INSTRUCTION MODAL ==================== -->
+  <div id="instruction-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-panel">
+      <h2>📖 分數魔法烘焙秘笈</h2>
+      <div class="modal-body">
+        <h3>🧙‍♂️ 關卡玩法說明</h3>
+        <ul>
+          <li><strong>關卡 1 - 認識與互換</strong>：拖曳杯子蛋糕，切換為假分數或帶分數。將材料精準打包！</li>
+          <li><strong>關卡 2 - 分數比大小</strong>：拖曳大於、小於或等於符號，比較兩個盤子裡的美味麵包。如果答錯，可以看到精確的半透明重疊比對！</li>
+          <li><strong>關卡 3 - 同分母加減</strong>：使用魔法天平調配烘焙原料。記得「同分母相加減，分母不變」！不夠減時要向整數借 1 喔！</li>
+          <li><strong>關卡 4 - 分數整數倍</strong>：在魔法烤箱中將數盤相同的甜點倒在同一個烤盤中，乘以整數代表連續相加，只需要乘分子喔！</li>
+        </ul>
+        <h3>⚔️ 雙人對決賽制</h3>
+        <ul>
+          <li>兩位烘焙師各有一套獨立隨機出現的題目，防止互相抄襲！</li>
+          <li>最先答對指定題數（如 5 題）烘焙出指定數量甜點的玩家直接勝出！</li>
+        </ul>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="gameEngine.toggleInstructionModal(false)">我明白了，出發！</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DUEL WINNER MODAL ==================== -->
+  <div id="winner-modal" class="modal-overlay hidden">
+    <div class="modal-content glass-panel winner-card">
+      <div class="winner-trophy">🏆</div>
+      <h2 id="winner-title">紅方烘焙師 贏得了勝利！</h2>
+      <p id="winner-desc">烘焙屋的特級廚師誕生了！</p>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="gameEngine.switchScreen('home'); gameEngine.toggleWinnerModal(false);">回烘焙屋大廳</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DEVELOPER PLAYTEST PANEL ==================== -->
+  <div id="dev-playtest-panel" class="dev-panel closed">
+    <div class="dev-header" onclick="playtestEngine.togglePanel()">
+      <span>⚙️ 開發者試玩除錯面板 (Playtest Panel)</span>
+      <span id="dev-toggle-icon">▲</span>
+    </div>
+    <div class="dev-body">
+      <div class="dev-controls">
+        <button id="btn-run-all-tests" class="btn-dev-action" onclick="playtestEngine.runFullAutoTest()">⚡ 執行全自動試玩除錯</button>
+        <button id="btn-stop-tests" class="btn-dev-action btn-dev-stop hidden" onclick="playtestEngine.stopTest()">⏹️ 停止測試</button>
+        <button class="btn-dev-action" onclick="playtestEngine.clearLogs()">🧹 清除日誌</button>
+      </div>
+      
+      <div class="test-status-bar">
+        狀態：<span id="test-status-text">閒置中</span>
+        | 成功斷言：<span id="test-pass-count" class="pass-count">0</span>
+        | 失敗/錯誤：<span id="test-fail-count" class="fail-count">0</span>
+      </div>
+      
+      <div id="test-logs" class="test-logs-container">
+        <!-- Test log lines will be inserted here -->
+        <div class="log-line info">等待執行自動化測試...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Modules -->
+  <script src="app.js?v=4.0.1"></script>
+</body>
+</html>
