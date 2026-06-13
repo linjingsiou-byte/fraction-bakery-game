@@ -29,6 +29,10 @@
         <span class="btn-icon">🎵</span>
         <span class="btn-text">音效</span>
       </button>
+      <button id="btn-toggle-secrets" class="control-btn" title="查看魔法烘焙秘笈">
+        <span class="btn-icon">📖</span>
+        <span class="btn-text">魔法秘笈</span>
+      </button>
       <button id="btn-nav-home" class="control-btn hide" title="回到首頁">
         <span class="btn-icon">🏠</span>
         <span class="btn-text">首頁</span>
@@ -212,6 +216,119 @@
 
   <!-- Particles container for celebration -->
   <div id="celebration-confetti-container" class="confetti-container"></div>
+
+  <!-- Modal for Magic Baking Secrets -->
+  <div id="modal-secrets" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🧁 魔法烘焙秘笈</h3>
+        <button id="btn-close-secrets" class="close-btn" title="關閉秘笈">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="secrets-welcome">
+          <p>親愛的小小烘焙師：歡迎來到魔法烘焙屋！想要用魔法做出最美味的點心，就要先學會神奇的「分數魔法」。快翻開秘笈，跟著魔法師一起出發吧！✨</p>
+        </div>
+
+        <!-- Chapter 1 -->
+        <div class="secrets-chapter">
+          <h4 class="chapter-title">🌟 第一章的魔法：什麼是「平分」？ <span class="chapter-tag">對應「平分小偵探」</span></h4>
+          <div class="chapter-content">
+            <h5>🍰 大家分到的點心要一樣大！</h5>
+            <p>要把香噴噴的蛋糕分給好朋友，最重要的事情就是<strong>公平</strong>。在數學裡，<strong>「平分」</strong>的意思就是：<strong>分出來的每一份，都要「一模一樣大」</strong>。這樣大家拿到的一樣多，才不會有人哭哭喔！</p>
+            <div class="secrets-grid">
+              <div class="secrets-card eq">
+                <h6>🟢 這是「平分」喔！ 👍</h6>
+                <ul>
+                  <li>圓形蛋糕從中間切開，左邊 and 右邊<strong>完全一樣大</strong>（平分成 2 份）。</li>
+                  <li>一條巧克力切成三塊，每一小塊的長度都<strong>一樣長</strong>（平分成 3 份）。</li>
+                </ul>
+              </div>
+              <div class="secrets-card neq">
+                <h6>😢 這「沒有平分」喔！ ❌</h6>
+                <ul>
+                  <li>三角形蛋糕隨便切一刀，上面那一塊小小的，下面那一塊大大的。因為<strong>大小不一樣</strong>，所以沒有平分！</li>
+                </ul>
+              </div>
+            </div>
+            <div class="secrets-alert info">
+              <span class="alert-emoji">💡</span> <strong>平分小口訣：</strong>「你一片，我一片，大家一樣大，就是平分！」
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 2 -->
+        <div class="secrets-chapter">
+          <h4 class="chapter-title">🌟 第二章的魔法：幾分之一的秘密 <span class="chapter-tag">對應「點心魔法師」</span></h4>
+          <div class="chapter-content">
+            <h5>✍️ 分數要怎麼寫？</h5>
+            <p>當我們把蛋糕平分之後，要怎麼用數字把「其中的 1 份」記錄下來呢？我們會畫一條橫橫的線，像是一個<strong>小托盤</strong>，在托盤上面和下面寫數字：</p>
+            <ol class="secrets-list">
+              <li><strong>住在托盤底下的數字叫「分母」</strong>：代表把點心<strong>總共平分成了幾份</strong>（像媽媽把蛋糕切成幾塊）。</li>
+              <li><strong>住在托盤上面的數字叫「分子」</strong>：代表我們<strong>拿了其中的幾份</strong>（因為我們都只拿其中的 1 份，所以上面都是寫 1 ）。</li>
+            </ol>
+            <div class="secrets-example-box">
+              <h6>🍰 範例：二分之一（讀作：二分之一）</h6>
+              <p>寫成 <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span>。意思就是：「把 1 個點心平分成 2 份，其中的 1 份」。</p>
+            </div>
+
+            <h5>🟢 大蛋糕「個」和 切片「份」的單位魔法</h5>
+            <p>小朋友，你聽過「<strong>1 個</strong>蛋糕」和「<strong>1 份</strong>蛋糕」嗎？它們在分數魔法裡可是很不一樣的喔！</p>
+            <table class="secrets-table">
+              <thead>
+                <tr>
+                  <th>點心種類</th>
+                  <th>還沒切之前的名字 🟢</th>
+                  <th>切開後的每一份 🟠</th>
+                  <th>魔法轉換範例</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>披薩 / 蛋糕</strong></td>
+                  <td><span class="unit-ge-label">個</span></td>
+                  <td><span class="unit-fen-label">份 / 片</span></td>
+                  <td>把 <strong>1 個</strong> 披薩平分成 <strong>4 份</strong>，其中的 <strong>1 份</strong> 是 <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">4</span></span> <strong>個</strong> 披薩。</td>
+                </tr>
+                <tr>
+                  <td><strong>巧克力 / 彩帶</strong></td>
+                  <td><span class="unit-ge-label">條</span></td>
+                  <td><span class="unit-fen-label">塊 / 段</span></td>
+                  <td>把 <strong>1 條</strong> 巧克力平分成 <strong>3 塊</strong>，其中的 <strong>1 塊</strong> 是 <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span> <strong>條</strong> 巧克力。</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="secrets-alert warning">
+              <span class="alert-emoji">⚠️</span> <strong>魔法提醒：</strong> 我們常說「其中的 1 份是四分之一份」，這樣寫是不對的喔！因為「四分之一個」代表的是整個披薩的四分之一。我們吃的是披薩本身（個），而不是包裝袋（份）！
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 3 -->
+        <div class="secrets-chapter">
+          <h4 class="chapter-title">🌟 第三章的魔法：誰吃得比較多？ <span class="chapter-tag">對應「貪吃熊比大小」</span></h4>
+          <div class="chapter-content">
+            <h5>⚖️ 比大小前要「一樣大」！</h5>
+            <p>在比較分數大小之前，點心原本的大小一定要一樣喔！如果小熊拿的是「超級大蛋糕」，小貓拿的是「玩具小蛋糕」，我們就不能直接用分數來比大小囉！</p>
+
+            <h5>🍰 分給越多人，吃到的就越小塊</h5>
+            <p>想像一下，如果你有一整個美味的蛋糕：</p>
+            <ul class="secrets-bullet-list">
+              <li>如果只有 <strong>2 個人</strong>分（平分成 2 份），你可以吃到很大一塊的 <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span> 個蛋糕。</li>
+              <li>如果有 <strong>8 個人</strong>來分（平分成 8 份），每個人只能分到小小的 <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">8</span></span> 個蛋糕。</li>
+            </ul>
+            <div class="secrets-alert tip">
+              <span class="alert-emoji">💡</span> <strong>比大小魔法金律：</strong><br>
+              「分給越少人（底下的分母越小），拿到的那一塊就<strong>越大</strong>！」<br>
+              「分給越多人（底下的分母越大），拿到的那一塊就<strong>越小</strong>！」
+            </div>
+            <div class="secrets-comparison-visual">
+              <p>大小排列：<span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span> ＞ <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span> ＞ <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">4</span></span> ＞ <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">8</span></span> （大嘴巴朝向比較大的分數喔！）</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Include Javascript logic -->
   <script src="js/app.js"></script>

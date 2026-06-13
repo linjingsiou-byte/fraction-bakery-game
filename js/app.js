@@ -356,6 +356,24 @@ const AppManager = {
       }
     });
     
+    // 魔法秘笈彈出視窗控制
+    document.getElementById('btn-toggle-secrets').addEventListener('click', () => {
+      AudioSynth.play('click');
+      document.getElementById('modal-secrets').classList.add('active');
+    });
+    
+    document.getElementById('btn-close-secrets').addEventListener('click', () => {
+      AudioSynth.play('click');
+      document.getElementById('modal-secrets').classList.remove('active');
+    });
+
+    document.getElementById('modal-secrets').addEventListener('click', (e) => {
+      if (e.target.id === 'modal-secrets') {
+        AudioSynth.play('click');
+        document.getElementById('modal-secrets').classList.remove('active');
+      }
+    });
+    
     // 選擇單人/對戰模式
     document.getElementById('card-mode-single').addEventListener('click', () => {
       AudioSynth.play('click');
