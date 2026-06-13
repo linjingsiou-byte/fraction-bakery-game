@@ -29,9 +29,9 @@
         <span class="btn-icon">🎵</span>
         <span class="btn-text">音效</span>
       </button>
-      <button id="btn-toggle-secrets" class="control-btn" title="查看魔法烘焙秘笈">
+      <button id="btn-toggle-secrets" class="control-btn" title="查看魔法烘培秘笈">
         <span class="btn-icon">📖</span>
-        <span class="btn-text">魔法秘笈</span>
+        <span class="btn-text">魔法烘培秘笈</span>
       </button>
       <button id="btn-nav-home" class="control-btn hide" title="回到首頁">
         <span class="btn-icon">🏠</span>
@@ -191,16 +191,12 @@
 
     <!-- Screen 5: Game 2 - Fraction Maker -->
     <section id="screen-game-2" class="game-screen">
-      <div id="game-2-container" class="game-container-wrapper">
-        <!-- Rendered dynamically via JS based on mode -->
-      </div>
+      <div id="game-2-container" class="game-container-wrapper"></div>
     </section>
 
     <!-- Screen 6: Game 3 - Fraction Comparison -->
     <section id="screen-game-3" class="game-screen">
-      <div id="game-3-container" class="game-container-wrapper">
-        <!-- Rendered dynamically via JS based on mode -->
-      </div>
+      <div id="game-3-container" class="game-container-wrapper"></div>
     </section>
   </main>
 
@@ -231,7 +227,7 @@
 
         <!-- Chapter 1 -->
         <div class="secrets-chapter">
-          <h4 class="chapter-title">🌟 第一章的魔法：什麼是「平分」？ <span class="chapter-tag">對應「平分小偵探」</span></h4>
+          <h4 class="chapter-title">🌟 第一關的魔法：什麼是「平分」？ <span class="chapter-tag">對應「平分小偵探」</span></h4>
           <div class="chapter-content">
             <h5>🍰 大家分到的點心要一樣大！</h5>
             <p>要把香噴噴的蛋糕分給好朋友，最重要的事情就是<strong>公平</strong>。在數學裡，<strong>「平分」</strong>的意思就是：<strong>分出來的每一份，都要「一模一樣大」</strong>。這樣大家拿到的一樣多，才不會有人哭哭喔！</p>
@@ -251,14 +247,17 @@
               </div>
             </div>
             <div class="secrets-alert info">
-              <span class="alert-emoji">💡</span> <strong>平分小口訣：</strong>「你一片，我一片，大家一樣大，就是平分！」
+              <span class="alert-emoji">💡</span>
+              <div style="flex: 1;">
+                <strong>平分小口訣：</strong>「你一片，我一片，大家一樣大，就是平分！」
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Chapter 2 -->
         <div class="secrets-chapter">
-          <h4 class="chapter-title">🌟 第二章的魔法：幾分之一的秘密 <span class="chapter-tag">對應「點心魔法師」</span></h4>
+          <h4 class="chapter-title">🌟 第二關的魔法：幾分之一的秘密 <span class="chapter-tag">對應「點心魔法師」</span></h4>
           <div class="chapter-content">
             <h5>✍️ 分數要怎麼寫？</h5>
             <p>當我們把蛋糕平分之後，要怎麼用數字把「其中的 1 份」記錄下來呢？我們會畫一條橫橫的線，像是一個<strong>小托盤</strong>，在托盤上面和下面寫數字：</p>
@@ -298,14 +297,17 @@
               </tbody>
             </table>
             <div class="secrets-alert warning">
-              <span class="alert-emoji">⚠️</span> <strong>魔法提醒：</strong> 我們常說「其中的 1 份是四分之一份」，這樣寫是不對的喔！因為「四分之一個」代表的是整個披薩的四分之一。我們吃的是披薩本身（個），而不是包裝袋（份）！
+              <span class="alert-emoji">⚠️</span>
+              <div style="flex: 1;">
+                <strong>魔法提醒：</strong> 我們常說「其中的 1 份是四分之一份」，這樣寫是不對的喔！因為「四分之一個」代表的是整個披薩的四分之一。我們吃的是披薩本身（個），而不是包裝袋（份）！
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Chapter 3 -->
         <div class="secrets-chapter">
-          <h4 class="chapter-title">🌟 第三章的魔法：誰吃得比較多？ <span class="chapter-tag">對應「貪吃熊比大小」</span></h4>
+          <h4 class="chapter-title">🌟 第三關的魔法：誰吃得比較多？ <span class="chapter-tag">對應「貪吃熊比大小」</span></h4>
           <div class="chapter-content">
             <h5>⚖️ 比大小前要「一樣大」！</h5>
             <p>在比較分數大小之前，點心原本的大小一定要一樣喔！如果小熊拿的是「超級大蛋糕」，小貓拿的是「玩具小蛋糕」，我們就不能直接用分數來比大小囉！</p>
@@ -317,9 +319,12 @@
               <li>如果有 <strong>8 個人</strong>來分（平分成 8 份），每個人只能分到小小的 <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">8</span></span> 個蛋糕。</li>
             </ul>
             <div class="secrets-alert tip">
-              <span class="alert-emoji">💡</span> <strong>比大小魔法金律：</strong><br>
-              「分給越少人（底下的分母越小），拿到的那一塊就<strong>越大</strong>！」<br>
-              「分給越多人（底下的分母越大），拿到的那一塊就<strong>越小</strong>！」
+              <span class="alert-emoji">💡</span>
+              <div style="flex: 1;">
+                <strong>比大小魔法金律：</strong><br>
+                「分給越少人（底下的分母越小），拿到的那一塊就<strong>越大</strong>！」<br>
+                「分給越多人（底下的分母越大），拿到的那一塊就<strong>越小</strong>！」
+              </div>
             </div>
             <div class="secrets-comparison-visual">
               <p>大小排列：<span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">2</span></span> ＞ <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">3</span></span> ＞ <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">4</span></span> ＞ <span class="math-fraction"><span class="num">1</span><span class="bar"></span><span class="den">8</span></span> （大嘴巴朝向比較大的分數喔！）</p>
