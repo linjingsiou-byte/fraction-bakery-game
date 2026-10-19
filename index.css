@@ -532,17 +532,27 @@ button {
 .cake-slice.clickable {
   cursor: pointer;
 }
-.cake-slice.clickable:hover {
-  filter: brightness(1.2);
+.cake-slice.whole-cake {
+  stroke: var(--magic-gold-light);
+  stroke-width: 3.5px;
+  fill: var(--magic-gold);
+  filter: drop-shadow(0 0 6px var(--magic-gold-glow));
 }
 .plate-label {
   position: absolute;
   bottom: -22px;
-  background: rgba(0,0,0,0.4);
-  padding: 2px 8px;
+  background: rgba(0,0,0,0.5);
+  padding: 2px 10px;
   border-radius: 10px;
   font-size: 0.8rem;
   color: var(--text-muted);
+  white-space: nowrap;
+}
+.plate-label.whole-label {
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  color: var(--magic-gold-light);
+  font-weight: 700;
 }
 
 /* Level 2: Comparison Double plates & Overlap visualization */

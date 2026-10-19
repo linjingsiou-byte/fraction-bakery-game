@@ -409,7 +409,7 @@ const RenderEngine = {
    * isInteractive: if true, slices are clickable to paint them.
    * onClickCallback: function(currentFilledCount) called when user toggles slices.
    */
-  drawCakeSVG(containerId, filledSlices, totalSlices, isInteractive = false, onClickCallback = null) {
+  drawCakeSVG(containerId, filledSlices, totalSlices, isInteractive = false, onClickCallback = null, customLabel = null) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.innerHTML = ''; // Clear
@@ -429,19 +429,20 @@ const RenderEngine = {
     let currentFilled = filledSlices;
     
     if (totalSlices === 1) {
-      // Draw single full circle
+      // Draw single solid whole circle (no sector slice lines)
       const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       circle.setAttribute('cx', '50');
       circle.setAttribute('cy', '50');
       circle.setAttribute('r', '45');
-      circle.setAttribute('class', `cake-slice ${currentFilled >= 1 ? 'filled' : 'empty'} ${isInteractive ? 'clickable' : ''}`);
+      circle.setAttribute('class', `cake-slice whole-cake ${currentFilled >= 1 ? 'filled' : 'empty'} ${isInteractive ? 'clickable' : ''}`);
+      if (isInteractive) {
+        circle.setAttribute('title', '點擊可切開此完整蛋糕！');
+      }
       
       if (isInteractive) {
         circle.addEventListener('click', () => {
-          currentFilled = currentFilled === 1 ? 0 : 1;
-          circle.setAttribute('class', `cake-slice ${currentFilled >= 1 ? 'filled' : 'empty'} clickable`);
           AudioSynth.play('click');
-          if (onClickCallback) onClickCallback(currentFilled);
+          if (onClickCallback) onClickCallback();
         });
       }
       
@@ -498,10 +499,17 @@ const RenderEngine = {
     
     div.appendChild(svg);
     
-    // Add small text label under plate
+    // Add text label under plate
     const label = document.createElement('div');
-    label.className = 'plate-label';
-    label.innerText = `分母為 ${totalSlices}`;
+    const isWhole = (totalSlices === 1) || (customLabel && customLabel.includes('完整'));
+    label.className = `plate-label ${isWhole ? 'whole-label' : ''}`;
+    if (customLabel !== null && customLabel !== undefined) {
+      label.innerText = customLabel;
+    } else if (totalSlices === 1) {
+      label.innerText = '1 個完整蛋糕';
+    } else {
+      label.innerText = `分母為 ${totalSlices}`;
+    }
     div.appendChild(label);
     
     container.appendChild(div);
@@ -509,6 +517,10 @@ const RenderEngine = {
   
   /**
    * Renders fraction representations in Level 1 (Understanding and conversion)
+   * Pedagogical Standard:
+   * - Mixed numbers / Integers: Integer part is rendered as whole unpartitioned cakes (1 個完整蛋糕).
+   * - Fractional part: Partitioned into denPart slices (分母為 denPart).
+   * - Improper fractions: Explicitly partitioned into denPart slices to show measurement in units of 1/denPart.
    */
   renderLevel1Visual(containerId, intPart, numPart, denPart, isInteractive = false, onStateChange = null) {
     const container = document.getElementById(containerId);
@@ -520,72 +532,109 @@ const RenderEngine = {
     cakeContainer.id = containerId + '-cakes';
     container.appendChild(cakeContainer);
     
-    // We render multiple cakes to represent mixed values or improper values
-    // e.g. for 2又3/4, we render 3 plates.
-    // First 2 plates are fully filled (4/4). Third plate has 3/4 filled.
-    const maxPlates = Math.ceil((intPart * denPart + numPart) / denPart) || 1;
-    // Always render at least 2 plates if improper or mixed, to visualize wholes
-    const platesToRender = Math.max(maxPlates, 2);
+    const isMixedOrInteger = intPart > 0;
+    const platesData = [];
     
-    let totalFilled = intPart * denPart + numPart;
+    if (isMixedOrInteger) {
+      // 1. Whole cake plates (intPart)
+      for (let i = 0; i < intPart; i++) {
+        platesData.push({
+          type: 'whole',
+          isSliced: false,
+          filledSlices: 1,
+          totalSlices: 1,
+          label: '1 個完整蛋糕'
+        });
+      }
+      // 2. Fractional plate (if numPart > 0)
+      if (numPart > 0) {
+        platesData.push({
+          type: 'fraction',
+          isSliced: true,
+          filledSlices: numPart,
+          totalSlices: denPart,
+          label: `分母為 ${denPart}`
+        });
+      }
+    } else {
+      // Proper or Improper fraction (intPart === 0)
+      const maxPlates = Math.ceil(numPart / denPart) || 1;
+      const platesToRender = Math.max(maxPlates, 2);
+      let remaining = numPart;
+      
+      for (let i = 0; i < platesToRender; i++) {
+        const filled = Math.min(remaining, denPart);
+        remaining = Math.max(0, remaining - denPart);
+        platesData.push({
+          type: 'fraction',
+          isSliced: true,
+          filledSlices: filled,
+          totalSlices: denPart,
+          label: `分母為 ${denPart}`
+        });
+      }
+    }
+    
+    const notifyStateChange = () => {
+      if (!onStateChange) return;
+      let totalSlices = 0;
+      platesData.forEach(p => {
+        if (p.type === 'whole' && !p.isSliced) {
+          totalSlices += denPart;
+        } else {
+          totalSlices += p.filledSlices;
+        }
+      });
+      const calculatedInt = Math.floor(totalSlices / denPart);
+      const calculatedNum = totalSlices % denPart;
+      onStateChange(calculatedInt, calculatedNum, denPart);
+    };
     
     const redrawAll = () => {
       cakeContainer.innerHTML = '';
-      let remainingFilled = totalFilled;
       
-      for (let i = 0; i < platesToRender; i++) {
-        const plateId = `${containerId}-plate-${i}`;
+      platesData.forEach((p, idx) => {
+        const plateId = `${containerId}-plate-${idx}`;
         const plateDiv = document.createElement('div');
         plateDiv.id = plateId;
         cakeContainer.appendChild(plateDiv);
         
-        const filledForThisPlate = Math.min(remainingFilled, denPart);
-        remainingFilled -= filledForThisPlate;
-        
-        const idx = i;
-        this.drawCakeSVG(plateId, filledForThisPlate, denPart, isInteractive, (newFilledForThisPlate) => {
-          // Re-calculate total filled based on user clicks
-          // Each plate handles its portion
-          let recalculatedTotal = 0;
-          const plates = cakeContainer.querySelectorAll('.baking-plate');
-          
-          // Let's gather values from each plate state
-          // To make it easy, we read what the clicks altered.
-          // Since it's interactive, we can update totalFilled directly
-          // We know plate i's filled count is now newFilledForThisPlate
-          // Let's update our global count
-          const currentPlatesFilled = [];
-          let tempRemaining = totalFilled;
-          for(let p=0; p<platesToRender; p++) {
-            currentPlatesFilled.push(Math.min(tempRemaining, denPart));
-            tempRemaining = Math.max(0, tempRemaining - denPart);
-          }
-          currentPlatesFilled[idx] = newFilledForThisPlate;
-          
-          // Recompute total filled
-          totalFilled = currentPlatesFilled.reduce((sum, val) => sum + val, 0);
-          
-          // Update visual states of all plates downstream/upstream
-          let tempVal = totalFilled;
-          const allSlicesGrouped = cakeContainer.querySelectorAll('.plate-cake-svg');
-          allSlicesGrouped.forEach((svgEl, svgIdx) => {
-            const plateFilledCount = Math.min(tempVal, denPart);
-            tempVal = Math.max(0, tempVal - denPart);
-            
-            const slices = svgEl.querySelectorAll('.cake-slice');
-            slices.forEach((slice, sliceIdx) => {
-              const shouldBeFilled = sliceIdx < plateFilledCount;
-              slice.setAttribute('class', `cake-slice ${shouldBeFilled ? 'filled' : 'empty'} clickable`);
-            });
-          });
-          
-          if (onStateChange) {
-            const calculatedInt = Math.floor(totalFilled / denPart);
-            const calculatedNum = totalFilled % denPart;
-            onStateChange(calculatedInt, calculatedNum, denPart);
-          }
-        });
-      }
+        if (p.type === 'whole' && !p.isSliced) {
+          // Render as unpartitioned solid whole cake
+          this.drawCakeSVG(plateId, 1, 1, isInteractive, () => {
+            // Student clicked on whole cake to slice it open (Scaffolding!)
+            p.isSliced = true;
+            p.totalSlices = denPart;
+            p.filledSlices = denPart;
+            p.label = `切成 ${denPart} 份 (${denPart}/${denPart})`;
+            redrawAll();
+            notifyStateChange();
+          }, p.label);
+        } else if (p.type === 'whole' && p.isSliced) {
+          // Whole cake currently sliced open
+          this.drawCakeSVG(plateId, p.filledSlices, denPart, isInteractive, (newFilled) => {
+            p.filledSlices = newFilled;
+            if (newFilled === denPart) {
+              // When full again, toggle back to solid whole cake
+              p.isSliced = false;
+              p.totalSlices = 1;
+              p.filledSlices = 1;
+              p.label = '1 個完整蛋糕';
+            } else {
+              p.label = `切成 ${denPart} 份 (${newFilled}/${denPart})`;
+            }
+            redrawAll();
+            notifyStateChange();
+          }, p.label);
+        } else {
+          // Fractional plate
+          this.drawCakeSVG(plateId, p.filledSlices, p.totalSlices, isInteractive, (newFilled) => {
+            p.filledSlices = newFilled;
+            redrawAll();
+            notifyStateChange();
+          }, p.label);
+        }
+      });
     };
     
     redrawAll();
